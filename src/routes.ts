@@ -1,6 +1,6 @@
 import express,{Express,Request,Response,Router} from 'express'
 import {login, register,validateToken} from './auth'
-import {createFundraiser,getFundraisers} from './fundraiser'
+import {createFundraiser,getFundraisers,makePledge,getPledges} from './fundraiser'
 
 const router:Router = express.Router();
 
@@ -9,6 +9,9 @@ router.post('/register',register);
 
 router.post('/create-fundraiser',validateToken,createFundraiser)
 router.get('/fundraisers',validateToken,getFundraisers);
+
+router.post('/make-pledge',makePledge)
+router.get('/pledges',validateToken,getPledges)
 
 
 

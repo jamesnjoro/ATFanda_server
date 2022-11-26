@@ -1,6 +1,6 @@
 import {Model,InferAttributes,InferCreationAttributes,CreationOptional,DataTypes,Sequelize} from 'sequelize'
 
-const sequelize = new Sequelize('atfanda','root','password',{
+export const sequelize = new Sequelize('atfanda','root','password',{
     host:'localhost',
     dialect:'mysql'
 })
@@ -20,7 +20,8 @@ User.init({
     },
     number: {
       type: DataTypes.BIGINT,
-      allowNull:false
+      allowNull:false,
+      unique:true
     },
     password:{
         type: DataTypes.STRING(200),
@@ -59,3 +60,63 @@ Fundraiser.init({
 },{
 sequelize,
 modelName:'Fundraiser'})
+
+export class Participant extends Model<InferAttributes<Participant>,InferCreationAttributes<Participant>>{
+    declare id:CreationOptional<number>;
+    declare name:string;
+    declare number:number;
+}
+
+Participant.init({
+    id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        primaryKey:true,
+        autoIncrement:true
+    },
+    name:{
+        type:DataTypes.STRING(150),
+        allowNull:false
+    },
+    number:{
+        type:DataTypes.BIGINT,
+        allowNull:false
+    }
+},{
+    sequelize,
+    modelName:'Participant'
+})
+
+export class Pledge extends Model<InferAttributes<Pledge>,InferCreationAttributes<Pledge>>{
+    declare id:CreationOptional<number>;
+    declare participant_id:number;
+    declare fundraiser_id:number;
+    declare amount:number;
+    declare source:string;
+}
+
+Pledge.init({
+    id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        primaryKey:true,
+        autoIncrement:true
+    },
+    participant_id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    fundraiser_id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    amount:{
+        type:DataTypes.BIGINT,
+        allowNull:false
+    },
+    source:{
+        type:DataTypes.STRING,
+        allowNull:false
+    }
+},{
+    sequelize,
+    modelName:'Pledge'
+})

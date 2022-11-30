@@ -24,6 +24,8 @@ export const login = async (req:Request,res:Response)=>{
             userJson.password = '';
             const token = jwt.sign(userJson,key);
             return res.json({token,'user':userJson})
+        }else{
+            return res.status(403).json({error:"Invalid password."})  
         }
     }else{
         return res.status(403).json({error:"Phone number not linked to any account."})
@@ -38,6 +40,7 @@ export const login = async (req:Request,res:Response)=>{
 export const register = async (req:Request,res:Response)=>{
     try{
         const {number,password} = req.body;
+        console.log(req.body)
         const hash = await bcrypt.hash(password,saltRounds);
         const user = await User.create({
             number,password:hash

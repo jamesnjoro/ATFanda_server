@@ -120,3 +120,68 @@ Pledge.init({
     sequelize,
     modelName:'Pledge'
 })
+
+export class Contribution extends Model<InferAttributes<Contribution>,InferCreationAttributes<Contribution>>{
+    declare id:CreationOptional<number>;
+    declare participant_id:number
+    declare fundraiser_id:number;
+    declare amount:number;
+    declare source:string;
+}
+
+Contribution.init({
+    id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        primaryKey:true,
+        autoIncrement:true
+    },
+    participant_id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    fundraiser_id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    amount:{
+        type:DataTypes.BIGINT,
+        allowNull:false
+    },
+    source:{
+        type:DataTypes.STRING,
+        allowNull:false
+    }
+},{
+    sequelize,
+    modelName:'Contribution'
+})
+
+export class Sms extends Model<InferAttributes<Sms>,InferCreationAttributes<Sms>>{
+    declare id:CreationOptional<number>;
+    declare participant_id:number
+    declare sms_type:number;
+    declare msg:string;
+}
+
+Sms.init({
+    id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        primaryKey:true,
+        autoIncrement:true
+    },
+    participant_id:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    sms_type:{
+        type:DataTypes.INTEGER.UNSIGNED,
+        allowNull:false
+    },
+    msg:{
+        type:DataTypes.STRING,
+        allowNull:false
+    }
+},{
+    sequelize,
+    modelName:'Sms'
+})
